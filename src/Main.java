@@ -18,15 +18,16 @@ public class Main {
 
         System.out.println("Сумма затрат на ЗП в месяц: " + amountOfSalaries());
 
-        Employee min = minimumWage(employees[0].getSalary(), employees[0]);
-        System.out.println("Сотрудник  с минимальной ЗП: " + min);
+        System.out.println("Сотрудник  с минимальной ЗП: " + minimumWage());
 
-        Employee max = maximumWage(employees[0].getSalary(), employees[0]);
-        System.out.println("Сотрудник с максимальной ЗП: " + max);
+        System.out.println("Сотрудник с максимальной ЗП: " + maximumWage());
 
         System.out.println("Cреднее значение зарплат: " + averageValueOfSalaries());
 
         fullNameOfAllEmployees();
+
+        indexTheSalary(10);
+
 
     }
 
@@ -50,7 +51,9 @@ public class Main {
         return sum;
     }
 
-    public static Employee minimumWage(double min, Employee employeeMin) {
+    public static Employee minimumWage() {
+        double min = employees[0].getSalary();
+        Employee employeeMin = employees[0];
         for (int i = 0; i < employees.length; i++) {
             if (min >= employees[i].getSalary()) {
                 min = employees[i].getSalary();
@@ -60,7 +63,9 @@ public class Main {
         return employeeMin;
     }
 
-    public static Employee maximumWage(double max, Employee employeeMax) {
+    public static Employee maximumWage() {
+        double max = employees[0].getSalary();
+        Employee employeeMax = employees[0];
         for (int i = 0; i < employees.length; i++) {
             if (max <= employees[i].getSalary()) {
                 max = employees[i].getSalary();
@@ -72,6 +77,27 @@ public class Main {
 
     public static double averageValueOfSalaries() {
         return amountOfSalaries() / employees.length;
+    }
+
+    //Повышенная сложность
+
+    public static void indexTheSalary(double percent) {
+        for (int i = 0; i < employees.length; i++) {
+            employees[i].setSalary(employees[i].getSalary() + (percent * (employees[i].getSalary() / 100)));
+            System.out.println(employees[i].getSalary());
+        }
+
+    }
+
+    public static Employee minimumSalaryDepartment(int department) {
+        double min = employees[0].getSalary();
+        Employee employeeMin = employees[0];
+        for (int i = 0; i < employees.length; i++) {
+            if (department == employees[i].getDepartment()) {
+                min = employees[i].getSalary();
+            }
+        }
+        return employeeMin;
     }
 
 
