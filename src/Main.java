@@ -1,6 +1,8 @@
 public class Main {
+    public static Employee[] employees = new Employee[10];
+
     public static void main(String[] args) {
-        Employee[] employees = new Employee[10];
+
         employees[0] = new Employee("Кочетков Александр Вадимович", 5, 257532);
         employees[1] = new Employee("Пименова Нина Кирилловна", 2, 308235);
         employees[2] = new Employee("Родин Артемий Степанович", 3, 280932);
@@ -12,44 +14,65 @@ public class Main {
         employees[8] = new Employee("Попов Даниил Сергеевич", 3, 350283);
         employees[9] = new Employee("Носова Екатерина Александровна", 1, 397562);
 
-        for (Employee employee : employees) {
-            System.out.println(employee);
-        }
+        dataOutput();
 
+        System.out.println("Сумма затрат на ЗП в месяц: " + amountOfSalaries());
+
+        Employee min = minimumWage(employees[0].getSalary(), employees[0]);
+        System.out.println("Сотрудник  с минимальной ЗП: " + min);
+
+        Employee max = maximumWage(employees[0].getSalary(), employees[0]);
+        System.out.println("Сотрудник с максимальной ЗП: " + max);
+
+        System.out.println("Cреднее значение зарплат: " + averageValueOfSalaries());
+
+        fullNameOfAllEmployees();
+
+    }
+
+    public static void dataOutput() {
+        for (int i = 0; i < employees.length; i++) {
+            System.out.println(employees[i]);
+        }
+    }
+
+    public static void fullNameOfAllEmployees() {
+        for (int i = 0; i < employees.length; i++) {
+            System.out.println(employees[i].getFullName());
+        }
+    }
+
+    public static double amountOfSalaries() {
         double sum = 0;
-        for (Employee employee : employees) {
-            sum += employee.getSalary();
+        for (int i = 0; i < employees.length; i++) {
+            sum += employees[i].getSalary();
         }
-        System.out.println("Сумма затрат на ЗП в месяц: " + sum);
+        return sum;
+    }
 
-
-        int min = (int) employees[4].getSalary();
-        Employee employeeMin = employees[6];
-        for (int i = 1; i < employees.length; i++) {
+    public static Employee minimumWage(double min, Employee employeeMin) {
+        for (int i = 0; i < employees.length; i++) {
             if (min >= employees[i].getSalary()) {
-                min = (int) employees[i].getSalary();
+                min = employees[i].getSalary();
                 employeeMin = employees[i];
             }
         }
-        System.out.println("Сотрудник  с минимальной ЗП: " + employeeMin);
+        return employeeMin;
+    }
 
-        int max = (int) employees[9].getSalary();
-        Employee employeeMax = employees[4];
-        for (int i = 1; i < employees.length; i++) {
+    public static Employee maximumWage(double max, Employee employeeMax) {
+        for (int i = 0; i < employees.length; i++) {
             if (max <= employees[i].getSalary()) {
-                max = (int) employees[i].getSalary();
+                max = employees[i].getSalary();
                 employeeMax = employees[i];
             }
         }
-        System.out.println("Сотрудник с максимальной ЗП: " + employeeMax);
-
-        System.out.println("Cреднее значение зарплат: " + sum / employees.length);
-
-
-        for (Employee employee : employees) {
-            System.out.println(employee.getFullName());
-        }
-
-
+        return employeeMax;
     }
+
+    public static double averageValueOfSalaries() {
+        return amountOfSalaries() / employees.length;
+    }
+
+
 }
