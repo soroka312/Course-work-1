@@ -54,9 +54,9 @@ public class Employee {
 
     @Override
     public String toString() {
-        return fullName + " / " +
-                "Отдел: " + department + "  " +
-                "Зарплата: " + salary + "  " +
-                "id: " + id;
+        return fullName +
+                " / Отдел: " + department +
+                " / Зарплата: " + salary +
+                " / id: " + id;
     }
 }

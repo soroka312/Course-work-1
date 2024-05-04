@@ -26,7 +26,31 @@ public class Main {
 
         fullNameOfAllEmployees();
 
-        indexTheSalary(10);
+        //Повышенная сложность
+
+        indexTheSalary();
+
+        System.out.println("Сотрудник с минимальной ЗП по отделу: " + minimumSalaryDepartment(2));
+
+        System.out.println("Сотрудник с максимальной ЗП по отделу: " + maximumSalaryDepartment(1));
+
+        System.out.println("Сумма затрат на ЗП в месяц по отделу: " + amountOfSalariesDepartment(5));
+
+        System.out.println("Cреднее значение зарплат по отделу: " + averageValueOfSalariesDepartment(3));
+
+        indexTheSalary(4);
+
+        allEmployeesOfTheDepartment(5);
+
+        System.out.println();
+        System.out.println("Все сотрудники с более низкой зарплатой:");
+
+        allEmployeesWithLowerSalaries(40000000);
+
+        System.out.println();
+        System.out.println("Все сотрудники с более высокой зарплатой:");
+
+        allEmployeesWithHigherSalaries(1);
 
 
     }
@@ -52,10 +76,10 @@ public class Main {
     }
 
     public static Employee minimumWage() {
-        double min = employees[0].getSalary();
+        double min = Integer.MAX_VALUE;
         Employee employeeMin = employees[0];
         for (int i = 0; i < employees.length; i++) {
-            if (min >= employees[i].getSalary()) {
+            if (min > employees[i].getSalary()) {
                 min = employees[i].getSalary();
                 employeeMin = employees[i];
             }
@@ -64,10 +88,10 @@ public class Main {
     }
 
     public static Employee maximumWage() {
-        double max = employees[0].getSalary();
+        double max = Integer.MIN_VALUE;
         Employee employeeMax = employees[0];
         for (int i = 0; i < employees.length; i++) {
-            if (max <= employees[i].getSalary()) {
+            if (max < employees[i].getSalary()) {
                 max = employees[i].getSalary();
                 employeeMax = employees[i];
             }
@@ -81,23 +105,100 @@ public class Main {
 
     //Повышенная сложность
 
+    public static void indexTheSalary() {
+        for (int i = 0; i < employees.length; i++) {
+            employees[i].setSalary(employees[i].getSalary() + (3 * (employees[i].getSalary() / 100)));
+            System.out.println(employees[i].getSalary());
+        }
+    }
+
+    public static Employee minimumSalaryDepartment(int department) {
+        double min = Integer.MAX_VALUE;
+        Employee employeeMin = employees[0];
+        for (int i = 0; i < employees.length; i++) {
+            if (department == employees[i].getDepartment() && min > employees[i].getSalary()) {
+                min = employees[i].getSalary();
+                employeeMin = employees[i];
+            } else if (department > 5 || department <= 0) {
+                throw new IllegalArgumentException("такого отдела нет");
+            }
+        }
+        return employeeMin;
+    }
+
+    public static Employee maximumSalaryDepartment(int department) {
+        double max = Integer.MIN_VALUE;
+        Employee employeeMax = employees[0];
+        for (int i = 0; i < employees.length; i++) {
+            if (department == employees[i].getDepartment() && max < employees[i].getSalary()) {
+                max = employees[i].getSalary();
+                employeeMax = employees[i];
+            } else if (department > 5 || department <= 0) {
+                throw new IllegalArgumentException("такого отдела нет");
+            }
+        }
+        return employeeMax;
+    }
+
+    public static double amountOfSalariesDepartment(int department) {
+        double sum = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (department == employees[i].getDepartment()) {
+                sum += employees[i].getSalary();
+            } else if (department > 5 || department <= 0) {
+                throw new IllegalArgumentException("такого отдела нет");
+            }
+        }
+        return sum;
+    }
+
+    public static double averageValueOfSalariesDepartment(int department) {
+        int people = 0;
+        double sum = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (department == employees[i].getDepartment()) {
+                people++;
+                sum += employees[i].getSalary();
+
+            } else if (department > 5 || department <= 0) {
+                throw new IllegalArgumentException("такого отдела нет");
+            }
+        }
+        return sum / people;
+    }
+
     public static void indexTheSalary(double percent) {
         for (int i = 0; i < employees.length; i++) {
             employees[i].setSalary(employees[i].getSalary() + (percent * (employees[i].getSalary() / 100)));
             System.out.println(employees[i].getSalary());
         }
-
     }
 
-    public static Employee minimumSalaryDepartment(int department) {
-        double min = employees[0].getSalary();
-        Employee employeeMin = employees[0];
+    public static void allEmployeesOfTheDepartment(int department) {
         for (int i = 0; i < employees.length; i++) {
             if (department == employees[i].getDepartment()) {
-                min = employees[i].getSalary();
+                System.out.println(employees[i].getFullName() + " / Зарплата: "
+                        + employees[i].getSalary() + " / id: " + employees[i].getId());
             }
         }
-        return employeeMin;
+    }
+
+    public static void allEmployeesWithLowerSalaries(double number) {
+        for (int i = 0; i < employees.length; i++) {
+            if (number > employees[i].getSalary()) {
+                System.out.println("id: " + employees[i].getId() + " / ФИО: "
+                        + employees[i].getFullName() + " / Зарплата: " + employees[i].getSalary());
+            }
+        }
+    }
+
+    public static void allEmployeesWithHigherSalaries(double number) {
+        for (int i = 0; i < employees.length; i++) {
+            if (number < employees[i].getSalary()) {
+                System.out.println("id: " + employees[i].getId() + " / ФИО: "
+                        + employees[i].getFullName() + " / Зарплата: " + employees[i].getSalary());
+            }
+        }
     }
 
 
